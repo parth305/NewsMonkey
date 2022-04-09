@@ -1,64 +1,59 @@
 import './App.css';
 
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Navbar from './component/Navbar';
 import News from './component/News';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// import { useState } from 'react/cjs/react.production.min';
+// import { useState } from 'react/cjs/react.production.min';
 
-export default class App extends Component {
+export default function App() {
 
-  constructor() {
-    super();
-    this.state = {
-      mode: "light",
-      color: "#8ABFEA"
-    }
-  }
-  changecolor = (event) => {
-    if (this.state.mode === "light") {
+  let apikey = process.env.REACT_APP_NEWS_API2
+  // let apikey = "2912b65428d6445cb363ecfc0291dd63"
+  let [mode, setmode] = useState("light");
+  let [color, setcolor] = useState("#8ABFEA")
+  let changecolor = (event) => {
+    if (mode === "light") {
       return
     }
-    this.setState({
-      mode: this.state.mode,
-      color: event.target.value
-    })
-    document.body.style.backgroundColor = this.state.color
+    setcolor(
+      event.target.value
+    )
+    document.body.style.backgroundColor = color
   }
-  togglemode = () => {
+  let togglemode = () => {
     console.log("hey");
-    if (this.state.mode === "light") {
-      this.setState({
-        mode: "dark",
-        color: this.state.color
-      })
-      document.body.style.backgroundColor = this.state.color
+    if (mode === "light") {
+      setmode(
+        "dark"
+      )
+      document.body.style.backgroundColor = color
     }
     else {
-      this.setState({
-        mode: "light",
-        color: this.state.color
-      })
+      setmode(
+        "light"
+      )
       document.body.style.backgroundColor = "white"
     }
   }
-  render() {
-    return (
-      <div>
-        <BrowserRouter>
-          <Navbar mode={this.state.mode} color={this.state.color} togglemode={this.togglemode} changecolor={this.changecolor} />
-          <Routes>
-            <Route exact path="/" element={ <News key="/" mode={this.state.mode} pagesize={5} country="in" category="general" />}></Route>
-            <Route exact path="/sports" element={ <News key="sports"  mode={this.state.mode} pagesize={5} country="in" category="sports" />}></Route>
-            <Route exact path="/technology" element={ <News key="technology"  mode={this.state.mode} pagesize={5} country="in" category="technology" />}></Route>
-            <Route exact path="/science" element={ <News key="science"  mode={this.state.mode} pagesize={5} country="in" category="science" />}></Route>
-            <Route exact path="/health" element={ <News key="health"  mode={this.state.mode} pagesize={5} country="in" category="health" />}></Route>
-            {/* <Route exact path="/general" element={ <News key="general" mode={this.state.mode} pagesize={5} country="in" category={"general"} />}></Route> */}
-            <Route exact path="/entertainment" element={ <News key="entertainment"  mode={this.state.mode} pagesize={5} country="in" category="entertainment" />}></Route>
-            <Route exact path="/business" element={ <News key="business" mode={this.state.mode} pagesize={5} country="in" category="business" />}></Route>
-          </Routes>
-        </BrowserRouter>
 
-      </div>
-    )
-  }
+  return (
+    <div>
+      <BrowserRouter>
+        <Navbar mode={mode} color={color} togglemode={togglemode} changecolor={changecolor} />
+        <Routes>
+          <Route exact path="/" element={<News apikey={apikey} key="/" mode={mode} pagesize={6} country="in" category="general" />}></Route>
+          <Route exact path="/sports" element={<News apikey={apikey} key="sports" mode={mode} pagesize={6} country="in" category="sports" />}></Route>
+          <Route exact path="/technology" element={<News apikey={apikey} key="technology" mode={mode} pagesize={6} country="in" category="technology" />}></Route>
+          <Route exact path="/science" element={<News apikey={apikey} key="science" mode={mode} pagesize={6} country="in" category="science" />}></Route>
+          <Route exact path="/health" element={<News apikey={apikey} key="health" mode={mode} pagesize={6} country="in" category="health" />}></Route>
+          {/* <Route exact path="/general" element={ <News key="general" mode={mode} pagesize={6} country="in" category={"general"} />}></Route> */}
+          <Route exact path="/entertainment" element={<News apikey={apikey} key="entertainment" mode={mode} pagesize={6} country="in" category="entertainment" />}></Route>
+          <Route exact path="/business" element={<News apikey={apikey} key="business" mode={mode} pagesize={6} country="in" category="business" />}></Route>
+        </Routes>
+      </BrowserRouter>
+
+    </div>
+  )
 }

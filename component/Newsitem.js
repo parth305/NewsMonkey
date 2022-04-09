@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 
-export default class Newsitem extends Component {
-
-  render() {
-    let { title, description, imageUrl, key, newsurl, author, publishedAt ,source} = this.props
+export default function Newsitem (props) {
+    let { title, description, imageUrl, key, newsurl, author, publishedAt ,source} = props
     return (
       <div className="card" style={{ width: "18rem" }}>
         <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{left:"90%",zIndex:"1"}}>
@@ -18,5 +16,4 @@ export default class Newsitem extends Component {
         </div>
       </div>
     )
-  }
 }
